@@ -65,47 +65,37 @@ int main(int argc, char *argv[])
  
 	// Jointstates things
 	sensor_msgs::JointState js;
-	js.name.resize(22);
-	js.name = {"leftarm_joint1","leftarm_joint2","leftarm_joint3","leftarm_joint4","leftarm_joint5","leftarm_joint6","leftarm_joint7",
-				"rightarm_joint1","rightarm_joint2","rightarm_joint3","rightarm_joint4","rightarm_joint5","rightarm_joint6","rightarm_joint7",
-				"dt_joint","pt_joint","yt_joint","yao_joint", 
-				"leftleg_joint1","leftleg_joint2","rightleg_joint1","rightleg_joint2"};
+	js.name.resize(7);
+	js.name = {"armjoint1","armjoint2","armjoint3","armjoint4","armjoint5","armjoint6","armjoint7"};
 	js.position.resize(js.name.size());
 	js.effort.resize(js.name.size());
 	js.velocity.resize(js.name.size());
 
-	geometry_msgs::WrenchStamped w_r;
 	geometry_msgs::WrenchStamped w_l;
 
 	ros::Publisher js_pub = n.advertise<sensor_msgs::JointState>("joint_states", 1000);
-	ros::Publisher wrc_l_pub = n.advertise<geometry_msgs::WrenchStamped>("wrench_left", 1000);
-	ros::Publisher wrc_r_pub = n.advertise<geometry_msgs::WrenchStamped>("wrench_right", 1000);
+	ros::Publisher wrc_pub = n.advertise<geometry_msgs::WrenchStamped>("wrench", 1000);
 	ros::Publisher vm = n.advertise<std_msgs::Float32>("voltage_mesr", 1000);
 	ros::Rate loop_rate(1000);
 
 	int rec_len = 0;
 	std::string s;
 	std::vector<std::string> vStr;
-	double joint[14];
 	int pub_cnt = 0;
 	int i = 0;
-	double ft[12] = {0.0};
+	double ft[6] = {0.0};
 
 	std_msgs::Float32 voltage;
 	
 	while (ros::ok())
 	{
-	
-	// 22 关节角， 22 电流 + 4履带电机电流， 12 力传感器数据
 		rec_len = recvfrom(sockSer, recvbuf, sizeof(recvbuf), MSG_DONTWAIT, (struct sockaddr*)&addrCli, &addrlen);
 		if (rec_len>0)
 		{
 			// ROS_INFO("Cli:>%s\n", recvbuf);
 			js.header.stamp = ros::Time::now();
-			w_r.header.stamp = ros::Time::now();
-			w_r.header.frame_id = "toollink_r";
-			w_l.header.frame_id = "toollink_l";
 			w_l.header.stamp = ros::Time::now();
+			w_l.header.frame_id = "toollink";
 
 			s = recvbuf;
 			try{
@@ -152,21 +142,13 @@ int main(int argc, char *argv[])
 				w_l.wrench.torque.y = ft[4];
 				w_l.wrench.torque.z = ft[5];
 
-				w_r.wrench.force.x = ft[6];
-				w_r.wrench.force.y = ft[7];
-				w_r.wrench.force.z = ft[8];
-				w_r.wrench.torque.x = ft[9];
-				w_r.wrench.torque.y = ft[10];
-				w_r.wrench.torque.z = ft[11];
-
 				voltage.data = atof(vStr.at(60).c_str());
 
 				if (pub_cnt > int(1000.0/param_rate))
 				{
 					pub_cnt = 0;
 					js_pub.publish(js);
-					wrc_l_pub.publish(w_l);
-					wrc_r_pub.publish(w_r);
+					wrc_pub.publish(w_l);
 					vm.publish(voltage);
 				}
 				pub_cnt ++;
