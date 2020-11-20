@@ -1,14 +1,17 @@
 <launch>
     <node name="rob_feedback" pkg="rob_feedback" type="rob_feedback_pub" respawn="false" output="screen" >
         <param name="port" type="int" value="8002" />
-        <param name="hostIP" type="str" value="192.168.50.15" /> 
+        <param name="hostIP" type="str" value="192.168.1.100" /> 
         <param name="publish_rate"   value="30"/>
 	<!--<param name="hostIP" type="str" value="10.8.0.4" />  -->
         <!-- 3 default -->
     </node>
     
-    <node pkg="tf" type="static_transform_publisher" name="t1" args="0.126 0 0 0 1.5707963 0  /leftarm_link7 /toollink_l 10" />
-    <node pkg="tf" type="static_transform_publisher" name="t2" args="0.126 0 0 0 1.5707963 0  /rightarm_link7 /toollink_r 10" />
+    <!-- <node pkg="tf" type="static_transform_publisher" name="t1" args="0.126 0 0 0 1.5707963 0  /leftarm_link7 /toollink_l 10" /> -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="t2" args="0.126 0 0 0 1.5707963 0  /rightarm_link7 /toollink_r 10" /> -->
     <!-- <node pkg="tf" type="static_transform_publisher" name="t3" args="0.126 0 0 0 1.5707963 0  /base_link /usb_cam 10" /> -->
+    <node pkg="tf" type="static_transform_publisher" name="t3" args="-0.19797 -0.027 0.00015 1.5708 3.1416 0 /leftarm_link7 /griper1 10" />
+    <node pkg="tf" type="static_transform_publisher" name="t4" args="-0.19797 0.027 0.00015 1.5708 0 0 /leftarm_link7 /griper2 10" />  
+    <!-- y p r -->
 
 </launch>

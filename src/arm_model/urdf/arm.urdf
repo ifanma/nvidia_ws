@@ -58,7 +58,7 @@
     </collision>
   </link>
   <joint
-    name="leftarm_joint1"
+    name="armjoint1"
     type="revolute">
     <origin
       xyz="0 0 0.3"
@@ -116,7 +116,7 @@
     </collision>
   </link>
   <joint
-    name="leftarm_joint2"
+    name="armjoint2"
     type="revolute">
     <origin
       xyz="0 0 0"
@@ -174,7 +174,7 @@
     </collision>
   </link>
   <joint
-    name="leftarm_joint3"
+    name="armjoint3"
     type="revolute">
     <origin
       xyz="0 -0.4495 0"
@@ -232,7 +232,7 @@
     </collision>
   </link>
   <joint
-    name="leftarm_joint4"
+    name="armjoint4"
     type="revolute">
     <origin
       xyz="-0.03 0 0"
@@ -290,7 +290,7 @@
     </collision>
   </link>
   <joint
-    name="leftarm_joint5"
+    name="armjoint5"
     type="revolute">
     <origin
       xyz="0.03 -0.4495 0"
@@ -348,7 +348,7 @@
     </collision>
   </link>
   <joint
-    name="leftarm_joint6"
+    name="armjoint6"
     type="revolute">
     <origin
       xyz="0 0 0"
@@ -384,7 +384,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="03.1416 0 0" />
+        rpy="3.1416 3.1416 0" />
       <geometry>
         <mesh
           filename="package://arm_model/meshes/leftarm_link7_.STL" />
@@ -406,11 +406,11 @@
     </collision>
   </link>
   <joint
-    name="leftarm_joint7"
+    name="armjoint7"
     type="revolute">
     <origin
       xyz="0 0 0"
-      rpy="1.5708 0 3.1416" />
+      rpy="1.5708 0 0" />
     <parent
       link="leftarm_link6" />
     <child
@@ -467,8 +467,8 @@
     name="griper_joint1"
     type="revolute">
     <origin
-      xyz="0.19797 0.027 0.00015"
-      rpy="-3.1416 0 1.5708" />
+      xyz="-0.19797 -0.027 0.00015"
+      rpy="-3.1416 0 -1.5708" />
     <parent
       link="leftarm_link7" />
     <child
@@ -525,8 +525,8 @@
     name="griper_joint2"
     type="revolute">
     <origin
-      xyz="0.19797 -0.027 0.00015"
-      rpy="0 0 -1.5708" />
+      xyz="-0.19797 0.027 0.00015"
+      rpy="0 0 1.5708" />
     <parent
       link="leftarm_link7" />
     <child

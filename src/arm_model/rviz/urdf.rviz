@@ -118,19 +118,50 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
-        All Enabled: true
+        All Enabled: false
+        base_link:
+          Value: true
+        griper1:
+          Value: false
+        griper2:
+          Value: false
+        leftarm_link1:
+          Value: false
+        leftarm_link2:
+          Value: false
+        leftarm_link3:
+          Value: false
+        leftarm_link4:
+          Value: false
+        leftarm_link5:
+          Value: false
+        leftarm_link6:
+          Value: false
+        leftarm_link7:
+          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        base_link:
+          leftarm_link1:
+            leftarm_link2:
+              leftarm_link3:
+                leftarm_link4:
+                  leftarm_link5:
+                    leftarm_link6:
+                      leftarm_link7:
+                        griper1:
+                          {}
+                        griper2:
+                          {}
       Update Interval: 0
-      Value: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -159,7 +190,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.1567115783691406
+      Distance: 2.0058364868164062
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -174,10 +205,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.49539846181869507
+      Pitch: 0.7053983211517334
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.220402717590332
+      Yaw: 4.215402126312256
     Saved: ~
 Window Geometry:
   Displays:

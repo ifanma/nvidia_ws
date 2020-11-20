@@ -1,8 +1,8 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include "std_msgs/Float32.h"
 #include "sensor_msgs/JointState.h"
 #include "geometry_msgs/WrenchStamped.h"
+#include "serial_dev_msgs/systemState.h"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
@@ -22,7 +22,7 @@
 #include <ifaddrs.h>
 
 #define MAX_LENGTH 254
-# define MAX_IP 10
+#define MAX_IP 10
 
 int port = 0;
 std::string hostIP;
@@ -75,8 +75,7 @@ int main(int argc, char *argv[])
 
 	ros::Publisher js_pub = n.advertise<sensor_msgs::JointState>("joint_states", 1000);
 	ros::Publisher wrc_pub = n.advertise<geometry_msgs::WrenchStamped>("wrench", 1000);
-	ros::Publisher vm = n.advertise<std_msgs::Float32>("voltage_mesr", 1000);
-	ros::Publisher rt = n.advertise<std_msgs::Float32>("time_elapsed", 1000);
+	ros::Publisher ss = n.advertise<serial_dev_msgs::systemState>("systemstate", 1000);
 	ros::Rate loop_rate(1000);
 
 	int rec_len = 0;
@@ -85,10 +84,8 @@ int main(int argc, char *argv[])
 	int pub_cnt = 0;
 	int i = 0;
 	double ft[6] = {0.0};
+	serial_dev_msgs::systemState ss_;
 
-	std_msgs::Float32 voltage;
-	std_msgs::Float32 runtime_;
-	
 	while (ros::ok())
 	{
 		rec_len = recvfrom(sockSer, recvbuf, sizeof(recvbuf), MSG_DONTWAIT, (struct sockaddr*)&addrCli, &addrlen);
@@ -97,7 +94,7 @@ int main(int argc, char *argv[])
 			// ROS_INFO("Cli:>%s\n", recvbuf);
 			js.header.stamp = ros::Time::now();
 			w_l.header.stamp = ros::Time::now();
-			w_l.header.frame_id = "toollink";
+			w_l.header.frame_id = "leftarm_link7";
 
 			s = recvbuf;
 			try{
@@ -142,16 +139,29 @@ int main(int argc, char *argv[])
 				w_l.wrench.torque.y = ft[4];
 				w_l.wrench.torque.z = ft[5];
 
-				voltage.data = atof(vStr.at(27).c_str());
-				runtime_.data = atof(vStr.at(28).c_str());
+				ss_.header.stamp = ros::Time::now();
+				ss_.voltage = atof(vStr.at(27).c_str());
+				ss_.time_elapsed = atof(vStr.at(28).c_str());
+				ss_.motor_state.clear();
+
+				for (i = 0; i< 7; i++)
+				{
+					int data = atoi(vStr.at(29 + i).c_str());
+					if (data > 1){
+						data = 2;
+					}
+					ss_.motor_state.push_back(data);
+				}
+
+				ss_.arm_state = atoi(vStr.at(36).c_str());
+				ss_.arm_fctrl_state = atoi(vStr.at(37).c_str());
 
 				if (pub_cnt > int(1000.0/param_rate))
 				{
 					pub_cnt = 0;
 					js_pub.publish(js);
 					wrc_pub.publish(w_l);
-					vm.publish(voltage);
-					rt.publish(runtime_);
+					ss.publish(ss_);
 				}
 				pub_cnt ++;
 			}
