@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
 	ros::Publisher js_pub = n.advertise<sensor_msgs::JointState>("joint_states", 1000);
 	ros::Publisher wrc_pub = n.advertise<geometry_msgs::WrenchStamped>("wrench", 1000);
 	ros::Publisher vm = n.advertise<std_msgs::Float32>("voltage_mesr", 1000);
+	ros::Publisher rt = n.advertise<std_msgs::Float32>("time_elapsed", 1000);
 	ros::Rate loop_rate(1000);
 
 	int rec_len = 0;
@@ -86,6 +87,7 @@ int main(int argc, char *argv[])
 	double ft[6] = {0.0};
 
 	std_msgs::Float32 voltage;
+	std_msgs::Float32 runtime_;
 	
 	while (ros::ok())
 	{
@@ -109,7 +111,14 @@ int main(int argc, char *argv[])
 					{
 						js.position.at(i) = 0;
 					}
-					js.effort.at(i) = atof(vStr.at(i + 22).c_str());
+
+					js.velocity.at(i) = atof(vStr.at(i + 7).c_str());
+					if (isnan(js.velocity.at(i)))
+					{
+						js.velocity.at(i) = 0;
+					}
+
+					js.effort.at(i) = atof(vStr.at(i + 14).c_str());
 					if (isnan(js.effort.at(i)))
 					{
 						js.effort.at(i) = 0;
@@ -118,18 +127,9 @@ int main(int argc, char *argv[])
 					// printf("%d,%f,%f,%f\n",i, js.position.at(i),js.effort.at(i), js.velocity.at(i));
 				}
 
-				for (i = 0; i< 4; i++)
+				for (i = 0; i< 6; i++)
 				{
-					js.velocity.at(i + 17) = atof(vStr.at(22 + 22 + i).c_str());
-					if (isnan(js.velocity.at(i + 18)))
-					{
-						js.velocity.at(i + 18) = 0;
-					}
-				}
-
-				for (i = 0; i< 12; i++)
-				{
-					ft[i] = atof(vStr.at(48 + i).c_str());
+					ft[i] = atof(vStr.at(i + 21).c_str());
 					if (isinf(ft[i]))
 					{
 						ft[i] = 0;
@@ -142,7 +142,8 @@ int main(int argc, char *argv[])
 				w_l.wrench.torque.y = ft[4];
 				w_l.wrench.torque.z = ft[5];
 
-				voltage.data = atof(vStr.at(60).c_str());
+				voltage.data = atof(vStr.at(27).c_str());
+				runtime_.data = atof(vStr.at(28).c_str());
 
 				if (pub_cnt > int(1000.0/param_rate))
 				{
@@ -150,6 +151,7 @@ int main(int argc, char *argv[])
 					js_pub.publish(js);
 					wrc_pub.publish(w_l);
 					vm.publish(voltage);
+					rt.publish(runtime_);
 				}
 				pub_cnt ++;
 			}
