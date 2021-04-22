@@ -4,7 +4,7 @@
   <param name="robot_port" type="int" value="8000"/>  
 
   <node name="sbus_remoter" pkg="serialdevice" type="sbus_remoter_pub" output="screen" respawn="false">
-  <!-- <param name="port"       value="/dev/remote_USB"/>   -->
+  <!-- <param name="port"       value="/dev/ttyUSB2"/>   -->
   <param name="port"       value="/dev/sbus_remorer"/>  
   <param name="baudrate"   value="115200"/>
   <param name="loop_rate"   value="50"/>
@@ -14,7 +14,7 @@
   <param name="armRx"   value="2"/>
   <param name="armRy"   value="2"/>
   <param name="armRz"   value="2"/>
-  <param name="carx"   value="1"/>
+  <param name="carx"   value="1.5"/>
   <param name="carz"   value="1"/>
   <param name="carxi"   value="30.0"/>
   <param name="carkua"   value="30.0"/>
