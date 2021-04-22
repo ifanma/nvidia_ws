@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="baud" default= "115200" />
+  <arg name="test_flag" default= "0" />
+  <arg name="Serial_flag" default= "1" />
+  <arg name="left_topic" default= "/left_hand" />
+  <arg name="right_topic" default= "/right_hand" />
+
+
+  <node name="handcontrolleft" pkg="inspire_hand" type="handcontroltopicpublisher1" output="screen" >
+    <param name = "hand_id" value="1" />
+    <param name = "portname" value="/dev/lefthand" />
+    <param name = "topic" value="$(arg left_topic)" />
+    <param name = "baudrate" value="$(arg baud)" />
+    <param name = "test_flags" value="$(arg test_flag)" />
+    <param name = "Serial_flags" value="$(arg Serial_flag)" />
+  </node>
+
+  <node name="handcontrolright" pkg="inspire_hand" type="handcontroltopicpublisher1" output="screen" >
+    <param name = "hand_id" value="1" />
+    <param name = "portname" value="/dev/righthand" />
+    <param name = "topic" value="$(arg right_topic)" />
+    <param name = "baudrate" value="$(arg baud)" />
+    <param name = "test_flags" value="$(arg test_flag)" />
+    <param name = "Serial_flags" value="$(arg Serial_flag)" />
+  </node>
+
+  <node pkg="hand_ctrl" type="hand_ctrl" name="hand_ctrl" output="screen" >
+    <param name = "left_topic" value="$(arg left_topic)" />
+    <param name = "right_topic" value="$(arg right_topic)" />
+    <param name="move_step" value="1000"/>
+    <param name="loop_rate" value="10"/>
+  </node>
+  
+</launch>
