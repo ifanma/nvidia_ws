@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 	js.name.resize(22);
 	js.name = {"leftarm_joint1","leftarm_joint2","leftarm_joint3","leftarm_joint4","leftarm_joint5","leftarm_joint6","leftarm_joint7",
 				"rightarm_joint1","rightarm_joint2","rightarm_joint3","rightarm_joint4","rightarm_joint5","rightarm_joint6","rightarm_joint7",
-				"dt_joint","pt_joint","yt_joint","yao_joint", 
+				"dt_joint","yt_joint","pt_joint","yao_joint", 
 				"leftleg_joint1","leftleg_joint2","rightleg_joint1","rightleg_joint2"};
 	js.position.resize(js.name.size());
 	js.effort.resize(js.name.size());
@@ -119,6 +119,16 @@ int main(int argc, char *argv[])
 					{
 						js.position.at(i) = 0;
 					}
+
+					if (i < 14)
+					{
+						js.velocity.at(i) = atof(vStr.at(i + 61).c_str());
+						if (isnan(js.velocity.at(i)))
+						{
+							js.velocity.at(i) = 0;
+						}
+					}
+
 					js.effort.at(i) = atof(vStr.at(i + 22).c_str());
 					if (isnan(js.effort.at(i)))
 					{
@@ -172,7 +182,8 @@ int main(int argc, char *argv[])
 				pub_cnt ++;
 			}
 			catch(std::exception e1){
-				ROS_WARN("failed");
+				ROS_WARN("failed\n");
+				// ROS_INFO_STREAM(e1.what());
 			}	
 		}
         
