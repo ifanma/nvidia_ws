@@ -49,6 +49,7 @@ add_message_files(FILES
   batteryInfo.msg
   Paw.msg
   headpan.msg
+  systemState.msg
 )
 
 ## Generate services in the 'srv' folder

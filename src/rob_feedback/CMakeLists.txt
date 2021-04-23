@@ -9,6 +9,7 @@ project(rob_feedback)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  serial_dev_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -116,7 +117,7 @@ catkin_package(
 include_directories(
   include ${catkin_INCLUDE_DIRS}
 # include
-  ${catkin_INCLUDE_DIRS}
+  # ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library

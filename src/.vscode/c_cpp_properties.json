@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/agx/nvidia_ws/devel/include/**",
+                "/home/agx/navigation/devel/include/**",
+                "/home/agx/velodyne/devel/include/**",
+                "/home/agx/cartographer/install_isolated/include/**",
+                "/opt/ros/melodic/include/**",
+                "/home/agx/navigation/src/navigation/amcl/include/**",
+                "/home/agx/navigation/src/navigation/base_local_planner/include/**",
+                "/home/agx/navigation/src/navigation/carrot_planner/include/**",
+                "/home/agx/navigation/src/navigation/clear_costmap_recovery/include/**",
+                "/home/agx/navigation/src/navigation/costmap_2d/include/**",
+                "/home/agx/navigation/src/navigation/dwa_local_planner/include/**",
+                "/home/agx/navigation/src/navigation/global_planner/include/**",
+                "/home/agx/imu/src/imu/include/**",
+                "/home/agx/nvidia_ws/src/inspire_hand/include/**",
+                "/home/agx/navigation/src/navigation/map_server/include/**",
+                "/home/agx/navigation/src/navigation/move_base/include/**",
+                "/home/agx/navigation/src/navigation/move_slow_and_clear/include/**",
+                "/home/agx/navigation/src/navigation/nav_core/include/**",
+                "/home/agx/navigation/src/navigation/navfn/include/**",
+                "/home/agx/navigation/src/navigation/rotate_recovery/include/**",
+                "/home/agx/velodyne/src/velodyne/velodyne_driver/include/**",
+                "/home/agx/velodyne/src/velodyne/velodyne_laserscan/include/**",
+                "/home/agx/velodyne/src/velodyne/velodyne_pcl/include/**",
+                "/home/agx/velodyne/src/velodyne/velodyne_pointcloud/include/**",
+                "/home/agx/navigation/src/navigation/voxel_grid/include/**",
+                "/usr/include/**"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14"
+        }
+    ],
+    "version": 4
+}

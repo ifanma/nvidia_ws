@@ -179,7 +179,7 @@ int main(int argc, char *argv[])
 				ss.left_motor_state.clear();
 				for (j = 0; j< 7; j++)
 				{
-					ss.left_motor_state.append(atof(vStr.at(i ++).c_str()));
+					ss.left_motor_state.push_back(atof(vStr.at(i ++).c_str()));
 				}
 				ss.leftarm_state = atof(vStr.at(i ++).c_str());
 				ss.leftarm_fctrl_state = atof(vStr.at(i ++).c_str());
@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
 				ss.right_motor_state.clear();
 				for (j = 0; j< 7; j++)
 				{
-					ss.right_motor_state.append(atof(vStr.at(i ++).c_str()));
+					ss.right_motor_state.push_back(atof(vStr.at(i ++).c_str()));
 				}
 				ss.rightarm_state = atof(vStr.at(i ++).c_str());
 				ss.rightarm_fctrl_state = atof(vStr.at(i ++).c_str());
@@ -195,21 +195,21 @@ int main(int argc, char *argv[])
 				ss.head_motor_state.clear();
 				for (j = 0; j< 3; j++)
 				{
-					ss.head_motor_state.append(atof(vStr.at(i ++).c_str()));
+					ss.head_motor_state.push_back(atof(vStr.at(i ++).c_str()));
 				}
 				ss.head_state = atof(vStr.at(i ++).c_str());
 
 				ss.leg_motor_state.clear();
 				for (j = 0; j< 5; j++)
 				{
-					ss.leg_motor_state.append(atof(vStr.at(i ++).c_str()));
+					ss.leg_motor_state.push_back(atof(vStr.at(i ++).c_str()));
 				}
 				ss.leg_state = atof(vStr.at(i ++).c_str());
 
 				ss.trc_motor_state.clear();
 				for (j = 0; j< 4; j++)
 				{
-					ss.trc_motor_state.append(atof(vStr.at(i ++).c_str()));
+					ss.trc_motor_state.push_back(atof(vStr.at(i ++).c_str()));
 				}
 				ss.trc_state = atof(vStr.at(i ++).c_str());
 
