@@ -169,7 +169,49 @@ int main(int argc, char *argv[])
 				w_r.wrench.torque.y = ft[10];
 				w_r.wrench.torque.z = ft[11];
 
-				voltage.data = atof(vStr.at(60).c_str());
+				ss.voltage = atof(vStr.at(60).c_str());
+
+				i = 75;
+				ss.left_motor_state.clear();
+				for (j = 0; j< 7; j++)
+				{
+					ss.left_motor_state.append(atof(vStr.at(i ++).c_str()));
+				}
+				ss.leftarm_state = atof(vStr.at(i ++).c_str());
+				ss.leftarm_fctrl_state = atof(vStr.at(i ++).c_str());
+
+				ss.right_motor_state.clear();
+				for (j = 0; j< 7; j++)
+				{
+					ss.right_motor_state.append(atof(vStr.at(i ++).c_str()));
+				}
+				ss.rightarm_state = atof(vStr.at(i ++).c_str());
+				ss.rightarm_fctrl_state = atof(vStr.at(i ++).c_str());
+
+				ss.head_motor_state.clear();
+				for (j = 0; j< 3; j++)
+				{
+					ss.head_motor_state.append(atof(vStr.at(i ++).c_str()));
+				}
+				ss.head_state = atof(vStr.at(i ++).c_str());
+
+				ss.leg_motor_state.clear();
+				for (j = 0; j< 5; j++)
+				{
+					ss.leg_motor_state.append(atof(vStr.at(i ++).c_str()));
+				}
+				ss.leg_state = atof(vStr.at(i ++).c_str());
+
+				ss.trc_motor_state.clear();
+				for (j = 0; j< 4; j++)
+				{
+					ss.trc_motor_state.append(atof(vStr.at(i ++).c_str()));
+				}
+				ss.trc_state = atof(vStr.at(i ++).c_str());
+
+				if (i - 75 != 30){
+					ROS_INFO("wrong index");
+				}
 
 				if (pub_cnt > int(1000.0/param_rate))
 				{
