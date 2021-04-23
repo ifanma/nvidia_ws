@@ -3,6 +3,7 @@
 #include "std_msgs/Float32.h"
 #include "sensor_msgs/JointState.h"
 #include "geometry_msgs/WrenchStamped.h"
+#include "serial_dev_msgs/systemState.h"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
@@ -80,19 +81,19 @@ int main(int argc, char *argv[])
 	ros::Publisher js_pub = n.advertise<sensor_msgs::JointState>("joint_states", 1000);
 	ros::Publisher wrc_l_pub = n.advertise<geometry_msgs::WrenchStamped>("wrench_left", 1000);
 	ros::Publisher wrc_r_pub = n.advertise<geometry_msgs::WrenchStamped>("wrench_right", 1000);
-	ros::Publisher vm = n.advertise<std_msgs::Float32>("voltage_mesr", 1000);
-	ros::Rate loop_rate(1000);
+	ros::Publisher ss_pub = n.advertise<serial_dev_msgs::systemState>("system_state", 1000);	ros::Rate loop_rate(1000);
 
 	int rec_len = 0;
 	std::string s;
 	std::vector<std::string> vStr;
 	double joint[14];
 	int pub_cnt = 0;
-	int i = 0;
+	int i = 0, j = 0;
 	double ft[12] = {0.0};
+	int lastsize = 0;
 
-	std_msgs::Float32 voltage;
-	
+	serial_dev_msgs::systemState ss;
+
 	while (ros::ok())
 	{
 	
@@ -106,12 +107,15 @@ int main(int argc, char *argv[])
 			w_r.header.frame_id = "toollink_r";
 			w_l.header.frame_id = "toollink_l";
 			w_l.header.stamp = ros::Time::now();
+			ss.header.stamp = ros::Time::now();
 
 			s = recvbuf;
 			try{
 
 				boost::split( vStr, s, boost::is_any_of( "," ), boost::token_compress_on );
-				ROS_INFO_STREAM(vStr.size());
+				if (vStr.size() != lastsize){
+					ROS_INFO_STREAM(vStr.size());
+				}
 				for( i = 0; i < js.name.size(); i++)
 				{
 					js.position.at(i) = atof(vStr.at(i).c_str());
@@ -219,12 +223,12 @@ int main(int argc, char *argv[])
 					js_pub.publish(js);
 					wrc_l_pub.publish(w_l);
 					wrc_r_pub.publish(w_r);
-					vm.publish(voltage);
+					ss_pub.publish(ss);
 				}
 				pub_cnt ++;
 			}
 			catch(std::exception e1){
-				ROS_WARN("failed\n");
+				ROS_WARN("deal failed\n");
 				// ROS_INFO_STREAM(e1.what());
 			}	
 		}
