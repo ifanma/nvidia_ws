@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <node pkg="toolbase" type="toolbase" name="toolbase" output="screen" >
+    <param name = "loop_rate" value="10"/>
+    <param name = "clear_loop" value="30"/>
+    <param name = "portname" value="/dev/ttyUSB0" />
+    <param name = "baudrate" value="9600" />
+  </node>
+  
+</launch>
