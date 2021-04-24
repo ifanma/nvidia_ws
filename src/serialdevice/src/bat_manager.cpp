@@ -3,16 +3,16 @@
 #include <serial/serial.h>  //ROS已经内置了的串口包 
 #include <std_msgs/String.h> 
 
-#include<serial_dev_msgs/batteryInfo.h>
-#include<serial_dev_msgs/SetHeight.h>
+#include<robot_msgs/batteryInfo.h>
+#include<robot_msgs/SetHeight.h>
 
 int fillter_period = 10;;
 
 int i, j;
 serial::Serial ser; //声明串口对象
 
-serial_dev_msgs::batteryInfo batstate;
-serial_dev_msgs::SetHeight st;
+robot_msgs::batteryInfo batstate;
+robot_msgs::SetHeight st;
 
 /* serial */
 std::string param_port_path_;
@@ -20,7 +20,7 @@ int param_baudrate_;
 std::vector<double> recdata[4];
 double resultdata[4];
 
-void write_callback_bat(const serial_dev_msgs::batteryInfo & a) 
+void write_callback_bat(const robot_msgs::batteryInfo & a) 
 {
     uint8_t cmd[8] = {0x00};
     cmd[0] = 0xaa;
@@ -51,7 +51,7 @@ int main (int argc, char** argv)
     //订阅主题，并配置回调函数 
     ros::Subscriber bat_sub = nh.subscribe("battery_cmd", 1000, write_callback_bat); 
     //发布主题 
-    ros::Publisher bat_pub = nh.advertise<serial_dev_msgs::batteryInfo>("battery_state", 1000); 
+    ros::Publisher bat_pub = nh.advertise<robot_msgs::batteryInfo>("battery_state", 1000); 
     
     //nh.param<bool>("debug_imu", param_use_debug, false);
 	nh.param<std::string>("bat_manager/port", param_port_path_, "/dev/ttyUSB1");

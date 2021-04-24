@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(manipulator)
+project(dealscript)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -8,8 +8,8 @@ project(manipulator)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  serial
   roscpp
+  robot_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -103,8 +103,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES arm_manipulator
-#  CATKIN_DEPENDS serial stdcpp
+#  LIBRARIES dealscript
+#  CATKIN_DEPENDS stdcpp
 #  DEPENDS system_lib
 )
 
@@ -121,7 +121,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/arm_manipulator.cpp
+#   src/${PROJECT_NAME}/dealscript.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -132,7 +132,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/arm_manipulator_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/dealscript_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -196,7 +196,7 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_arm_manipulator.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_dealscript.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
@@ -204,20 +204,8 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-
-add_executable(arm_manipulator_pub
-  src/arm_manipulator.cpp
-)
-add_dependencies(arm_manipulator_pub ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(arm_manipulator_pub
+add_executable(dealscript src/dealscript.cpp)
+add_dependencies(dealscript ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(dealscript
   ${catkin_LIBRARIES}
 )
-
-add_executable(car_manipulator_pub
-  src/car_manipulator.cpp
-)
-add_dependencies(car_manipulator_pub ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(car_manipulator_pub
-  ${catkin_LIBRARIES}
-)
-

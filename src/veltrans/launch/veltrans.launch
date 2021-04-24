@@ -1,3 +1,0 @@
-<launch>
-    <node name="veltrans" pkg="veltrans" type="veltrans" respawn="false" output="screen" />
-</launch>

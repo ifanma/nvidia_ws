@@ -2,7 +2,7 @@
 #include <serial/serial.h>  //ROS已经内置了的串口包 
 #include <std_msgs/String.h> 
 #include <std_msgs/Empty.h> 
-#include <serial_dev_msgs/Paw.h>
+#include <robot_msgs/Paw.h>
 
 // ===========================================
 
@@ -22,7 +22,7 @@ int param_rightuse_ = 0;
 
 int param_loop_rate_;
 
-void write_callback_pawcmd(const serial_dev_msgs::Paw & pawcmd) 
+void write_callback_pawcmd(const robot_msgs::Paw & pawcmd) 
 {
     uint8_t cmd[8] = {'\0'};
     uint16_t cmd_pos;

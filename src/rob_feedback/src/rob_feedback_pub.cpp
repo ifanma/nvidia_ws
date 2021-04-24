@@ -2,7 +2,7 @@
 #include "std_msgs/String.h"
 #include "sensor_msgs/JointState.h"
 #include "geometry_msgs/WrenchStamped.h"
-#include "serial_dev_msgs/systemState.h"
+#include "robot_msgs/systemState.h"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 
 	ros::Publisher js_pub = n.advertise<sensor_msgs::JointState>("joint_states", 1000);
 	ros::Publisher wrc_pub = n.advertise<geometry_msgs::WrenchStamped>("wrench", 1000);
-	ros::Publisher ss = n.advertise<serial_dev_msgs::systemState>("systemstate", 1000);
+	ros::Publisher ss = n.advertise<robot_msgs::systemState>("systemstate", 1000);
 	ros::Rate loop_rate(1000);
 
 	int rec_len = 0;
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 	int pub_cnt = 0;
 	int i = 0;
 	double ft[6] = {0.0};
-	serial_dev_msgs::systemState ss_;
+	robot_msgs::systemState ss_;
 
 	while (ros::ok())
 	{

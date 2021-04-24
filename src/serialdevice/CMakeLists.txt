@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   serial
   tf
-  serial_dev_msgs
+  robot_msgs
 )
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -199,22 +199,6 @@ add_executable(bat_manager
 )
 add_dependencies(bat_manager ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(bat_manager
-  ${catkin_LIBRARIES}
-)
-
-add_executable(ardu_remoter_pub
-  src/ardu_remoter.cpp
-)
-add_dependencies(ardu_remoter_pub ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(ardu_remoter_pub
-  ${catkin_LIBRARIES}
-)
-
-add_executable(sbus_remoter_pub
-  src/sbus_remoter.cpp
-)
-add_dependencies(sbus_remoter_pub ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(sbus_remoter_pub
   ${catkin_LIBRARIES}
 )
 
