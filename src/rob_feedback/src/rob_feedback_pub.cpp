@@ -116,6 +116,7 @@ int main(int argc, char *argv[])
 				if (vStr.size() != lastsize){
 					ROS_INFO_STREAM(vStr.size());
 				}
+				lastsize = vStr.size();
 				for( i = 0; i < js.name.size(); i++)
 				{
 					js.position.at(i) = atof(vStr.at(i).c_str());
@@ -212,6 +213,8 @@ int main(int argc, char *argv[])
 					ss.trc_motor_state.push_back(atof(vStr.at(i ++).c_str()));
 				}
 				ss.trc_state = atof(vStr.at(i ++).c_str());
+
+				ss.time_elapsed = ((float)atol(vStr.at(i).c_str())) / 1000000.0;
 
 				if (i - 75 != 33){
 					ROS_INFO("wrong index: %d", i - 75);
