@@ -213,8 +213,8 @@ int main(int argc, char *argv[])
 				}
 				ss.trc_state = atof(vStr.at(i ++).c_str());
 
-				if (i - 75 != 30){
-					ROS_INFO("wrong index");
+				if (i - 75 != 33){
+					ROS_INFO("wrong index: %d", i - 75);
 				}
 
 				if (pub_cnt > int(1000.0/param_rate))
