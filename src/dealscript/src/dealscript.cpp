@@ -42,7 +42,7 @@ char sendbuf[MAX_LENGTH];
 // 	sendto(sockCli, sendbuf, strlen(sendbuf)+1, 0, (struct sockaddr*)&addrSer, addrlen);
 // }
 
-bool deal(robot_msgs::tcrScriptRequest &req, robot_msgs::tcrScriptResponse &res)
+bool deal(robot_msgs::drScriptRequest &req, robot_msgs::drScriptResponse &res)
 {
     memcpy(&sendbuf, req.command.c_str(), req.command.size());
     std::cout<< req.command <<  std::endl;
