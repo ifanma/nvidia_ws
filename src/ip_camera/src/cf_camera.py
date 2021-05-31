@@ -14,7 +14,7 @@ source  = 'rtsp://192.168.50.50:554/Streaming/Channels/101?transportmode=unicast
 class image_converter:
 
   def __init__(self):
-    self.image_pub = rospy.Publisher("cf_image_raw",Image, queue_size = 10)
+    self.image_pub = rospy.Publisher("cf_image",Image, queue_size = 10)
 
     self.bridge = CvBridge()
     self.cap = cv2.VideoCapture(source) #Open camera one

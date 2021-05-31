@@ -14,7 +14,7 @@ source  = 'rtsp://admin:space305@192.168.50.12:554/Streaming/Channels/101?transp
 class image_converter:
 
   def __init__(self):
-    self.image_pub = rospy.Publisher("ir_image2_raw",Image, queue_size = 10)
+    self.image_pub = rospy.Publisher("ir_image2",Image, queue_size = 10)
 
     self.bridge = CvBridge()
     self.cap = cv2.VideoCapture(source) #Open camera one
