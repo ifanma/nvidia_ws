@@ -8,12 +8,12 @@
   <param name="port"       value="/dev/sbus_remorer"/>  
   <param name="baudrate"   value="115200"/>
   <param name="loop_rate"   value="50"/>
-  <param name="armx"   value="1"/>
-  <param name="army"   value="1"/>
-  <param name="armz"   value="1"/>
-  <param name="armRx"   value="2"/>
-  <param name="armRy"   value="2"/>
-  <param name="armRz"   value="2"/>
+  <param name="armx"   value="0.1"/>
+  <param name="army"   value="0.1"/>
+  <param name="armz"   value="0.1"/>
+  <param name="armRx"   value="0.2"/>
+  <param name="armRy"   value="0.2"/>
+  <param name="armRz"   value="0.2"/>
   <param name="carx"   value="1.5"/>
   <param name="carz"   value="1"/>
   <param name="carxi"   value="30.0"/>
