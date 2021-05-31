@@ -18,10 +18,14 @@
   <param name="carz"   value="1"/>
   <param name="leftarmbeta"  value="1.0"/>
   <param name="rightarmbeta"  value="-1.0"/>
+  
+  <param name="moveSpeedInit"  value="1.0"/>
+  <param name="moveSpeedUplim"  value="2.0"/>
+  <param name="moveSpeedDownlim"  value="0.1"/>
 
   </node>
 
-  <include file="$(find veltrans)/launch/veltrans.launch" />
+  <!-- <include file="$(find veltrans)/launch/veltrans.launch" /> -->
 
 </launch>
 
