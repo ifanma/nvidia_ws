@@ -1,6 +1,6 @@
 <launch>
 
-  <param name="robot_ip" type="string" value="192.168.1.100"/>  
+  <param name="robot_ip" type="string" value="192.168.50.21"/>  
   <param name="robot_port" type="int" value="8000"/>  
 
   <node name="dealscript" pkg="dealscript" type="dealscript" output="screen" respawn="false"/>
