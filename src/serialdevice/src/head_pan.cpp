@@ -2,8 +2,8 @@
 #include <serial/serial.h>  //ROS已经内置了的串口包 
 #include <std_msgs/String.h> 
 #include <std_msgs/Empty.h> 
-// #include <serial_dev_msgs/Paw.h>
-# include <serial_dev_msgs/headpan.h>
+// #include <robot_msgs/Paw.h>
+# include <robot_msgs/headpan.h>
 
 // ===========================================
 
@@ -22,7 +22,7 @@ double pitchdownlim;
 double yawuplim;
 double yawdownlim;
 
-void write_callback_pawcmd(const serial_dev_msgs::headpan & pancmd) 
+void write_callback_pawcmd(const robot_msgs::headpan & pancmd) 
 {
     uint8_t cmd[8] = {'\0'};
     uint16_t cmd_pos;

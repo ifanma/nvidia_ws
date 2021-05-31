@@ -8,7 +8,6 @@
 uint8_t cmd_servoOn[8] = {0x88, 0, 0, 0, 0, 0, 0, 0};
 uint8_t cmd_close[8] = {0xa2, 0, 0, 0, 0x11, 0x11, 0x02, 0};
 uint8_t cmd_open[8] = {0xa2, 0, 0, 0, 0xee, 0xee, 0xfd, 0xff};
-//uint8_t cmd_close[8] = {0};
 uint8_t cmd_stop[8] = {0xa2, 0, 0, 0, 0, 0, 0, 0};
 
 serial::Serial ser; //声明串口对象
@@ -20,18 +19,14 @@ int64_t start_pos_some[MAX_TIMES] = {0};
 int close_pos = 0;
 int open_pos = 0;
 
-int fresh_flag = 0;
-int clear_loop = 30;
-
-uint8_t cmd_speed[8] = {0};
-uint8_t rec[8] = {0};
+int fresh_flag = -1;
+int clear_loop = 50;
 
 //回调函数
 void callback(const std_msgs::Int32::ConstPtr& cmd)
 {
     if (cmd->data == 1)
     {
-
         ser.write(cmd_close, 8);
         ROS_INFO("close");
     }
@@ -40,16 +35,6 @@ void callback(const std_msgs::Int32::ConstPtr& cmd)
         ser.write(cmd_open, 8);
         ROS_INFO("open");
     } 
-    // cmd_speed[0] = 0xa2;
-    // cmd_speed[1] = 0;
-    // cmd_speed[2] = 0;
-    // cmd_speed[3] = 0;
-    // cmd_speed[4] = ((uint8_t *)(&cmd->data))[0];
-    // cmd_speed[5] = ((uint8_t *)(&cmd->data))[1];
-    // cmd_speed[6] = ((uint8_t *)(&cmd->data))[2];
-    // cmd_speed[7] = ((uint8_t *)(&cmd->data))[3];
-    // ser.write(cmd_speed, 8);
-    // ROS_INFO("open");
     fresh_flag = 0;
     
 }
@@ -58,7 +43,7 @@ int main(int argc, char **argv)
 {
  	ros::init(argc,argv,"toolbase");
  	ros::NodeHandle n("~");
-    int rate = 10;
+    int rate = 0;
 
     n.getParam("loop_rate", rate);
     n.getParam("clear_loop", clear_loop);
@@ -90,11 +75,11 @@ int main(int argc, char **argv)
         return -1; 
     } 
 
-    //  for (int i = 0; i< 2; i++)
-    // {
-    //      ser.write(cmd_servoOn, 8);
-    //      ros::Duration(1).sleep();
-    //  }
+    for (int i = 0; i< 2; i++)
+    {
+        ser.write(cmd_servoOn, 8);
+        ros::Duration(0.1).sleep();
+    }
 
     ros::Subscriber sub = n.subscribe("/toolchanger", 10, callback);
     ros::Rate loop_rate(rate);
@@ -104,7 +89,6 @@ int main(int argc, char **argv)
     { 
         if (fresh_flag > clear_loop )
         {
-           
             fresh_flag = -1;
             ser.write(cmd_stop, 8);
         }
@@ -112,22 +96,10 @@ int main(int argc, char **argv)
             fresh_flag ++;
         }
         
-        // ROS_INFO("freshflag: %d\n", fresh_flag);
-        
-
-     
-        //ROS_INFO("speed: %d\n", cmd_open);
+        ROS_INFO("freshflag: %d\n", fresh_flag);
         //处理ROS的信息，比如订阅消息,并调用回调函数 
         ros::spinOnce(); 
-         if (ser.available())
-            {
-                ser.read(rec, 8);
-                ser.flushInput();
-            }
         loop_rate.sleep(); 
-        
-        ROS_INFO("DATA: %x,%x,%x,%x,%x,%x,%x,%x\n", rec[0], rec[1], rec[2] ,rec[3] ,rec[4], rec[5] ,rec[6],rec[7], rec[8]);      
-       
 
     }
     ser.close();

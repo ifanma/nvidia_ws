@@ -16,14 +16,14 @@
     <param name = "Serial_flags" value="$(arg Serial_flag)" />
   </node>
 
-  <node name="handcontrolright" pkg="inspire_hand" type="handcontroltopicpublisher1" output="screen" >
+  <!-- <node name="handcontrolright" pkg="inspire_hand" type="handcontroltopicpublisher1" output="screen" >
     <param name = "hand_id" value="1" />
     <param name = "portname" value="/dev/righthand" />
     <param name = "topic" value="$(arg right_topic)" />
     <param name = "baudrate" value="$(arg baud)" />
     <param name = "test_flags" value="$(arg test_flag)" />
     <param name = "Serial_flags" value="$(arg Serial_flag)" />
-  </node>
+  </node> -->
 
   <node pkg="hand_ctrl" type="hand_ctrl" name="hand_ctrl" output="screen" >
     <param name = "left_topic" value="$(arg left_topic)" />

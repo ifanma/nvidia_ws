@@ -3,12 +3,14 @@
         <param name="port" type="int" value="8002" />
         <param name="hostIP" type="str" value="192.168.50.20" /> 
         <param name="publish_rate"   value="30"/>
+        <param name="publish_topic"   value="/system_state"/>
+        
 	<!--<param name="hostIP" type="str" value="10.8.0.4" />  -->
         <!-- 3 default -->
     </node>
     
-    <node pkg="tf" type="static_transform_publisher" name="t1" args="0.126 0 0 0 1.5707963 0  /leftarm_link7 /toollink_l 10" />
-    <node pkg="tf" type="static_transform_publisher" name="t2" args="0.126 0 0 0 1.5707963 0  /rightarm_link7 /toollink_r 10" />
+    <node pkg="tf" type="static_transform_publisher" name="tt1" args="0.126 0 0 0 1.5707963 0  /leftarm_link7 /toollink_l 10" />
+    <node pkg="tf" type="static_transform_publisher" name="tt2" args="0.126 0 0 0 1.5707963 0  /rightarm_link7 /toollink_r 10" />
     <!-- <node pkg="tf" type="static_transform_publisher" name="t3" args="0.126 0 0 0 1.5707963 0  /base_link /usb_cam 10" /> -->
 
 </launch>

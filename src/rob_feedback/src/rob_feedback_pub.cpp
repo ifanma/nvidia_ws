@@ -2,7 +2,7 @@
 #include "std_msgs/String.h"
 #include "std_msgs/Float32.h"
 #include "sensor_msgs/JointState.h"
-#include "geometry_msgs/WrenchStamped.h"
+#include "geometry_msgs/Wrench.h"
 #include "robot_msgs/systemState.h"
 
 #include <boost/algorithm/string/classification.hpp>
@@ -27,6 +27,7 @@
 
 int port = 0;
 std::string hostIP;
+std::string publish_topic;
 char recvbuf[1024];
 int param_rate;
 
@@ -43,6 +44,7 @@ int main(int argc, char *argv[])
 	n.param<int>("rob_feedback/port",port, 0);
 	n.param<std::string>("rob_feedback/hostIP",hostIP, "127.0.0.1");
 	n.param<int>("rob_feedback/publish_rate",param_rate, 100);
+	n.param<std::string>("rob_feedback/publish_topic",publish_topic, "system_state");
 	std::cout<<hostIP<<std::endl;
 
 	int sockSer = socket(AF_INET, SOCK_DGRAM, 0);
@@ -75,13 +77,13 @@ int main(int argc, char *argv[])
 	js.effort.resize(js.name.size());
 	js.velocity.resize(js.name.size());
 
-	geometry_msgs::WrenchStamped w_r;
-	geometry_msgs::WrenchStamped w_l;
+	geometry_msgs::Wrench w_r;
+	geometry_msgs::Wrench w_l;
 
 	ros::Publisher js_pub = n.advertise<sensor_msgs::JointState>("joint_states", 1000);
-	ros::Publisher wrc_l_pub = n.advertise<geometry_msgs::WrenchStamped>("wrench_left", 1000);
-	ros::Publisher wrc_r_pub = n.advertise<geometry_msgs::WrenchStamped>("wrench_right", 1000);
-	ros::Publisher ss_pub = n.advertise<robot_msgs::systemState>("system_state", 1000);	ros::Rate loop_rate(1000);
+	ros::Publisher wrc_l_pub = n.advertise<geometry_msgs::Wrench>("wrench_left", 1000);
+	ros::Publisher wrc_r_pub = n.advertise<geometry_msgs::Wrench>("wrench_right", 1000);
+	ros::Publisher ss_pub = n.advertise<robot_msgs::systemState>(publish_topic.c_str(), 1000);	ros::Rate loop_rate(1000);
 
 	int rec_len = 0;
 	std::string s;
@@ -103,10 +105,10 @@ int main(int argc, char *argv[])
 		{
 			// ROS_INFO("Cli:>%s\n", recvbuf);
 			js.header.stamp = ros::Time::now();
-			w_r.header.stamp = ros::Time::now();
-			w_r.header.frame_id = "toollink_r";
-			w_l.header.frame_id = "toollink_l";
-			w_l.header.stamp = ros::Time::now();
+			// w_r.header.stamp = ros::Time::now();
+			// w_r.header.frame_id = "toollink_r";
+			// w_l.header.frame_id = "toollink_l";
+			// w_l.header.stamp = ros::Time::now();
 			ss.header.stamp = ros::Time::now();
 
 			s = recvbuf;
@@ -160,19 +162,19 @@ int main(int argc, char *argv[])
 						ft[i] = 0;
 					}
 				}
-				w_l.wrench.force.x = ft[0];
-				w_l.wrench.force.y = ft[1];
-				w_l.wrench.force.z = ft[2];
-				w_l.wrench.torque.x = ft[3];
-				w_l.wrench.torque.y = ft[4];
-				w_l.wrench.torque.z = ft[5];
+				w_l.force.x = ft[0];
+				w_l.force.y = ft[1];
+				w_l.force.z = ft[2];
+				w_l.torque.x = ft[3];
+				w_l.torque.y = ft[4];
+				w_l.torque.z = ft[5];
 
-				w_r.wrench.force.x = ft[6];
-				w_r.wrench.force.y = ft[7];
-				w_r.wrench.force.z = ft[8];
-				w_r.wrench.torque.x = ft[9];
-				w_r.wrench.torque.y = ft[10];
-				w_r.wrench.torque.z = ft[11];
+				w_r.force.x = ft[6];
+				w_r.force.y = ft[7];
+				w_r.force.z = ft[8];
+				w_r.torque.x = ft[9];
+				w_r.torque.y = ft[10];
+				w_r.torque.z = ft[11];
 
 				ss.voltage = atof(vStr.at(60).c_str());
 

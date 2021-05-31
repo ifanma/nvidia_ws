@@ -389,8 +389,8 @@ int main (int argc, char** argv)
                                     if (rec_right[1] > 400){
                                         if (enonce == 0){
                                             enonce = 1;
-                                            sprintf(sendbuf,"EnMotor(2,-1)\n");
-                                            UDP_send(sendbuf);
+                                            //sprintf(sendbuf,"EnMotor(2,-1)\n");
+                                            //UDP_send(sendbuf);
                                             sprintf(sendbuf,"EnMotor(3,-1)\n");
                                             UDP_send(sendbuf);
                                             sprintf(sendbuf,"EnMotor(4,-1)\n");
@@ -401,8 +401,8 @@ int main (int argc, char** argv)
                                     {
                                         if (enonce == 0){
                                             enonce = 1;
-                                            sprintf(sendbuf,"DisMotor(2,-1)\n");
-                                            UDP_send(sendbuf);
+                                            //sprintf(sendbuf,"DisMotor(2,-1)\n");
+                                            //UDP_send(sendbuf);
                                             sprintf(sendbuf,"DisMotor(3,-1)\n");
                                             UDP_send(sendbuf);
                                             sprintf(sendbuf,"DisMotor(4,-1)\n");
